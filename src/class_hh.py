@@ -1,7 +1,5 @@
-from pprint import pprint
 from src.abstract_classes import Api
 import requests
-
 from src.class_vacancy import Vacancy
 
 
@@ -31,8 +29,8 @@ class HeadHunter(Api):
         """
         Метод для конвертации вывода в нужный формат. Он является приватным
         потому, что он используется только внутри метода load_vacancies.
-        :param data:
-        :return:
+        :param data: Массив вакансий с сайта hh.ru
+        :return: Список вакансий.
         """
         return [
             Vacancy(
@@ -53,7 +51,3 @@ class HeadHunter(Api):
             for item in data.get('items')
 
         ]
-
-# for v in HeadHunter().load_vacancies('python'):
-#     print(v)
-# pprint(HeadHunter().load_vacancies('python'))

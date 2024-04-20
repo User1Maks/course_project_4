@@ -1,5 +1,4 @@
-import json
-from typing import Union
+from datetime import datetime
 
 
 class Vacancy:
@@ -29,12 +28,12 @@ class Vacancy:
         self.salary_max = self._validate_salary(salary_max) or 0
         self.requirement = requirement
         self.responsibility = responsibility
-        self.publication_date = publication_date
+        self.publication_date = self._date_formatting(publication_date)
         self.employment = employment
         self.address = address
 
     @staticmethod
-    def _validate_salary(salary):
+    def _validate_salary(salary) -> int:
         """
          Метод для проверки зарплаты. Если зарплата не указана выставиться
          значение по умолчанию "Не указано".
@@ -49,7 +48,7 @@ class Vacancy:
 
         return {
             'Должность': self.job_title,
-            'Зарплата': f'{self.salary_min} до {self.salary_max}',
+            'Зарплата': {self.salary_min} - {self.salary_max},
             'Требования к вакансии': self.requirement,
             'Описание обязанностей': self.responsibility,
             'Занятость': self.employment,
@@ -59,13 +58,14 @@ class Vacancy:
         }
 
     @staticmethod
-    def save_to_json(vacs):
+    def _date_formatting(date):
         """
-        Метод для сохранения отобранных вакансии в json файл.
+        Метод для конвертации даты
+        :return:
         """
-        with open('data.json', mode='w', encoding='utf-8') as f:
-            json.dump([vacancy.to_json() for vacancy in vacs], f, indent=4,
-                      ensure_ascii=False)
+        date_format = datetime.fromisoformat(date)
+        date_format = date_format.strftime('%d.%m.%Y %H:%M')
+        return date_format
 
     def __str__(self) -> str:
         """ Метод для вывода информации класса Vacancy"""
@@ -94,11 +94,14 @@ class Vacancy:
             f'Ссылка на вакансию: {self.link_to_vacancy}\n'
         )
 
-    def __lt__(self, other):
+    def __lt__(self, other) -> bool:
         """
         Магический метод для определения работы метода sorted
-        :param other:
-        :return:
+        :param other: Второй аргумент для сравнения с первым.
+        :return: Условие для определения метода sorted.
         """
+        if not isinstance(other, (Vacancy, int)):
+            raise TypeError('Аргумент должен иметь тип int или Vacancy')
+        if type(other) is type(self):
+            return self.salary_min < other.salary_min
         return self.salary_min < other.salary_min
-

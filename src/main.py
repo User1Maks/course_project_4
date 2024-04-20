@@ -1,9 +1,7 @@
-from pprint import pprint
 
-from src.class_savevacancy import SaveVacancy
-from src.class_vacancy import Vacancy
+from pprint import pprint
+from src.class_savevacancy import SaveVacancyJson
 from src.class_hh import HeadHunter
-from utils.functions import lict_vacancies
 
 
 def main():
@@ -14,7 +12,7 @@ def main():
     quantity_requests = int(input('Сколько позиций Вы хотите вывести? '))
 
     pprint(job_vacancy[:quantity_requests])
-    SaveVacancy(job_vacancy)
+    SaveVacancyJson(job_vacancy)
 
 
 main()

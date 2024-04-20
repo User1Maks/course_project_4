@@ -9,7 +9,7 @@ class Api(ABC):
 
     @abstractmethod
     def __init__(self):
-        """ Метод для инициализации"""
+        """ Метод для инициализации """
         pass
 
     @abstractmethod
@@ -26,6 +26,7 @@ class VacancyMethods(ABC):
     - получения данных из файла по указанным критериям;
     - удаление информации о вакансиях.
     """
+
     @abstractmethod
     def add_vacancy(self):
         """ Добавление вакансии """
@@ -33,11 +34,10 @@ class VacancyMethods(ABC):
 
     @abstractmethod
     def fetch_data(self):
-        """ Получение данных """
+        """ Получение данных по указанным критериям """
         pass
 
     @abstractmethod
     def del_vacancy(self):
-        """ Удаление данных о вакансии"""
+        """ Удаление информации о вакансии """
         pass
-
