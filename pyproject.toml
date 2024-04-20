@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "course-work4"
+version = "0.1.0"
+description = ""
+authors = ["Maksim Kamenev <maksim-kamenev96@mail.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pytest-cov = "^5.0.0"
+requests = "^2.31.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
