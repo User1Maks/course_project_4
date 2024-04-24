@@ -21,7 +21,7 @@ def main():
     # json_saver.add_vacancy(vacancy)
     # json_saver.delete_vacancy(vacancy)
 
-    platforms = ['HeadHunter']
+    # platforms = ['HeadHunter']
 
     top_n = int(input('Введите количество вакансий для вывода в топ N: '))
     filter_words = input(

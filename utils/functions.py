@@ -57,7 +57,7 @@ def sal_range():
         salary = [int(salary_min), int(salary_max)]
         return salary
     else:
-        return int(max(two_salary))
+        return two_salary
 
 
 def get_vacancies_by_salary(filtered_vacancies: list[Vacancy], salary_range):
@@ -70,7 +70,7 @@ def get_vacancies_by_salary(filtered_vacancies: list[Vacancy], salary_range):
     for vacancy in filtered_vacancies:
         if len(salary_range) == 1:
             for salary in filtered_vacancies:
-                if salary.salary_min >= int(salary_range):
+                if salary.salary_min >= int(min(salary_range)):
                     salary_vacancies.append(vacancy)
 
         if len(salary_range) == 2:
