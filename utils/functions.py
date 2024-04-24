@@ -1,3 +1,7 @@
+import os
+
+from config import ROOT_DIR
+from src.class_savevacancy import JSONSaver
 from src.class_vacancy import Vacancy
 
 
@@ -12,7 +16,7 @@ def filter_vacancies(vacancies_list: list[Vacancy], filter_words: list) -> list:
 
     for vacancy in vacancies_list:
         for word in filter_words:
-            if word in vacancy.responsibility or vacancy.requirement:
+            if word in vacancy.responsibility or word in vacancy.requirement:
                 filter_list.append(vacancy)
                 break
     return filter_list
@@ -68,15 +72,8 @@ def get_vacancies_by_salary(filtered_vacancies: list[Vacancy], salary_range):
     salary_vacancies = []
 
     for vacancy in filtered_vacancies:
-        if len(salary_range) == 1:
-            for salary in filtered_vacancies:
-                if salary.salary_min >= int(min(salary_range)):
-                    salary_vacancies.append(vacancy)
-
-        if len(salary_range) == 2:
-            for salary in filtered_vacancies:
-                if salary.salary_min >= salary_range[0]:
-                    salary_vacancies.append(salary)
+        if vacancy.salary_min >= int(salary_range[0]):
+            salary_vacancies.append(vacancy)
 
     return salary_vacancies
 
@@ -90,3 +87,28 @@ def sort_vacancies(ranged_vacancies):
     """
     list_range = sorted(ranged_vacancies, reverse=True)
     return list_range
+
+
+def work_with_the_file(vacancies):
+    """
+     Работа с файлами. Будет предлагаться пользователю для со сохранения,
+     удаления и добавления вакансий.
+    """
+
+    user_input = 0
+    while user_input not in ['2', 'stop', 'стоп']:
+        user_input = input('Выберите действие:\n'
+                           '1 - Сохранить вакансии;\n'
+                           '2 - Завершить работу\n'
+                           'Для завершения работы также можете набрать "стоп"'
+                           'или "stop".\n'
+                           ).lower().strip()
+
+        if user_input == '1':
+            file_name = input('Введите название файла: ')
+
+            file_path = os.path.join(ROOT_DIR, 'data', file_name)
+            json_saver = JSONSaver(file_path)
+            json_saver.save_vacancies(vacancies)
+            print('Файл был успешно сохранен')
+            break

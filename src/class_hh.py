@@ -15,7 +15,7 @@ class HeadHunter(Api):
         """
         self.url = 'https://api.hh.ru/vacancies'
         self.headers = {'User-Agent': 'HH-User-Agent'}
-        self.params = {'text': '', 'page': 0, 'per_page': 100}
+        self.params = {'text': '', 'page': 0, 'currency': 'RUR', 'per_page': 100}
         self.vacancies = []
 
     def load_vacancies(self, keyword: str) -> list[Vacancy]:
