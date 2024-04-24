@@ -1,6 +1,7 @@
 from src.class_hh import HeadHunter
 from utils.functions import get_top_vacancies, filter_vacancies, \
-    get_vacancies_by_salary, print_vacancies, sort_vacancies, sal_range
+    get_vacancies_by_salary, print_vacancies, sort_vacancies, sal_range, \
+    work_with_the_file
 from src.class_vacancy import Vacancy
 
 
@@ -21,15 +22,11 @@ def main():
     # json_saver.add_vacancy(vacancy)
     # json_saver.delete_vacancy(vacancy)
 
-    # platforms = ['HeadHunter']
-
     top_n = int(input('Введите количество вакансий для вывода в топ N: '))
     filter_words = input(
         "Введите ключевые слова для фильтрации вакансий: ").split()
-    # salary_range = input(
-    #     "Введите диапазон зарплат: ")  # Пример: 100000 - 150000
 
-    salary_range = sal_range()
+    salary_range = sal_range()  # Пример: 100000 - 150000
 
     filtered_vacancies = filter_vacancies(vacancies_list, filter_words)
 
@@ -41,6 +38,8 @@ def main():
     top_vacancies = get_top_vacancies(sorted_vacancies, top_n)
 
     print_vacancies(top_vacancies)
+
+    work_with_the_file(top_vacancies)
 
 
 if __name__ == '__main__':

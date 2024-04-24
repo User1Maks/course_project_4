@@ -8,7 +8,8 @@ class Vacancy:
 
     def __init__(self, name: str, link_to_vacancy: str, salary_min: int,
                  salary_max: int, requirement: str, responsibility: str,
-                 publication_date: str, employment: str, address: str):
+                 publication_date: str, employment: str, address: str,
+                 currency: str):
         """
         Конструктор класса Vacancies.
         :param name: Должность.
@@ -31,6 +32,7 @@ class Vacancy:
         self.publication_date = self._date_formatting(publication_date)
         self.employment = employment
         self.address = address
+        self.currency = currency
 
     @staticmethod
     def convert_to_vacancy(data):
@@ -38,18 +40,16 @@ class Vacancy:
         return [
             Vacancy(
                 name=item.get('name'),
-                link_to_vacancy=
-                (item.get('alternate_url', 'Не указано')),
-                salary_min=
-                (item.get('salary', {}) or {}).get('from'),
-                salary_max=
-                (item.get('salary', {}) or {}).get('to'),
+                link_to_vacancy=item.get('alternate_url', 'Не указано'),
+                salary_min=(item.get('salary', {}) or {}).get('from'),
+                salary_max=(item.get('salary', {}) or {}).get('to'),
                 requirement=item.get('snippet').get('requirement'),
                 responsibility=item.get('snippet').get('responsibility'),
                 publication_date=item.get('published_at'),
                 employment=item.get('employment').get('name'),
-                address=
-                (item.get('address', {}) or {}).get('raw', 'Не указан'))
+                address=(item.get('address', {}) or {}).get('raw', 'Не указан'),
+                currency=(item.get('salary', {}) or {}).get('currency',
+                                                            'Не указана'))
             for item in data
 
         ]
@@ -94,7 +94,7 @@ class Vacancy:
 
         return {
             'Должность': self.name,
-            'Зарплата': self.__print_salary(),
+            'Зарплата': f'{self.__print_salary()} - {self.currency}',
             'Требования к вакансии': self.requirement,
             'Описание обязанностей': self.responsibility,
             'Занятость': self.employment,
@@ -117,7 +117,7 @@ class Vacancy:
         """ Метод для вывода информации класса Vacancy"""
         return (
             f'Должность: {self.name}\n'
-            f'Зарплата: {self.__print_salary()}\n'
+            f'Зарплата: {self.__print_salary()} {self.currency}\n'
             f'Требования к вакансии: {self.requirement}\n'
             f'Описание обязанностей: {self.responsibility}\n'
             f'Занятость: {self.employment}\n'
@@ -131,7 +131,7 @@ class Vacancy:
         return (
             f'{self.__class__.__name__}:\n'
             f'Должность: {self.name}\n'
-            f'Зарплата: {self.__print_salary()}\n'
+            f'Зарплата: {self.__print_salary()} {self.currency}\n'
             f'Требования к вакансии: {self.requirement}\n'
             f'Описание обязанностей: {self.responsibility}\n'
             f'Занятость: {self.employment}\n'
