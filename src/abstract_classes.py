@@ -9,7 +9,6 @@ class Api(ABC):
 
     @abstractmethod
     def __init__(self):
-        """ Метод для инициализации"""
         pass
 
     @abstractmethod
@@ -18,26 +17,32 @@ class Api(ABC):
         pass
 
 
-class VacancyMethods(ABC):
+class WorkingWithFiles(ABC):
     """
-    Абстрактный класс для работы с классом.
-    Содержит абстрактные методы для:
-    - добавления вакансий в файл;
-    - получения данных из файла по указанным критериям;
-    - удаление информации о вакансиях.
+    Абстрактный класс для класса JSONSaver, который будет работать с файлами.
     """
+
     @abstractmethod
-    def add_vacancy(self):
-        """ Добавление вакансии """
+    def __init__(self):
         pass
 
     @abstractmethod
-    def fetch_data(self):
-        """ Получение данных """
+    def upload_vacancies(self):
         pass
 
     @abstractmethod
-    def del_vacancy(self):
-        """ Удаление данных о вакансии"""
+    def save_vacancies(self, vacancies):
         pass
 
+    @abstractmethod
+    def add_vacancy(self, vacancies):
+        pass
+
+    @abstractmethod
+    def delete_vacancy(self, vacancy):
+        pass
+
+    @staticmethod
+    @abstractmethod
+    def work_with_the_file():
+        pass
