@@ -34,25 +34,30 @@ class Vacancy:
         self.address = address
         self.currency = currency
 
-    @staticmethod
-    def convert_to_vacancy(data):
-
-        return [
-            Vacancy(
-                name=item.get('name'),
-                link_to_vacancy=item.get('alternate_url', 'Не указано'),
-                salary_min=(item.get('salary', {}) or {}).get('from'),
-                salary_max=(item.get('salary', {}) or {}).get('to'),
-                requirement=item.get('snippet').get('requirement'),
-                responsibility=item.get('snippet').get('responsibility'),
-                publication_date=item.get('published_at'),
-                employment=item.get('employment').get('name'),
-                address=(item.get('address', {}) or {}).get('raw', 'Не указан'),
-                currency=(item.get('salary', {}) or {}).get('currency',
-                                                            'Не указана'))
-            for item in data
-
-        ]
+    @classmethod
+    def convert_to_vacancy(cls, list_vacancies):
+        """ Класс метод для создания экземпляров класса """
+        returned_list = []
+        for vacancy in list_vacancies:
+            name = vacancy.get('name')
+            link_to_vacancy = vacancy.get('alternate_url', 'Не указано')
+            salary_min = (vacancy.get('salary', {}) or {}).get('from')
+            salary_max = (vacancy.get('salary', {}) or {}).get('to')
+            requirement = (vacancy.get('snippet', {}) or {}).get('requirement',
+                                                                 'Не найдено')
+            responsibility = (vacancy.get('snippet', {}) or {}).get(
+                'responsibility', 'Не найдено')
+            publication_date = (vacancy.get('published_at', {}) or 'Не найдено')
+            employment = (vacancy.get('employment', {}) or {}).get('name',
+                                                                   'Не найдено')
+            address = (vacancy.get('address', {}) or {}).get('raw', 'Не указан')
+            currency = (vacancy.get('salary', {}) or {}).get('currency',
+                                                             'Не указана')
+            vacancy_object = cls(name, link_to_vacancy, salary_min, salary_max,
+                                 requirement, responsibility, publication_date,
+                                 employment, address, currency)
+            returned_list.append(vacancy_object)
+        return returned_list
 
     @staticmethod
     def check_data_str(value):

@@ -16,7 +16,7 @@ def filter_vacancies(vacancies_list: list[Vacancy], filter_words: list) -> list:
 
     for vacancy in vacancies_list:
         for word in filter_words:
-            if word in vacancy.responsibility or vacancy.requirement:
+            if word in vacancy.responsibility or word in vacancy.requirement:
                 filter_list.append(vacancy)
                 break
     return filter_list
@@ -99,7 +99,7 @@ def work_with_the_file(vacancies):
     while user_input not in ['2', 'stop', 'стоп']:
         user_input = input('Выберите действие:\n'
                            '1 - Сохранить вакансии;\n'
-                           '2 - Завершить работу'
+                           '2 - Завершить работу\n'
                            'Для завершения работы также можете набрать "стоп"'
                            'или "stop".\n'
                            ).lower().strip()
